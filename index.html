@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MAfia Police</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+    <body>
+        <div class="container d-flex align-items-center my-5">
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Enter Names Seperated By space (Optional)</label>
+                        <input id="names" type="text" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Enter Names Seperated by space">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Input Mafia Count</label>
+                        <input id="mafia" type="text" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Enter Mafia Count">
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Input Police Count</label>
+                        <input id="police" type="text" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Enter Police Count">
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Input Doctor Count (optional)</label>
+                        <input id="doctor" type="text" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Enter Doctor Count">
+                    </div>
+                </div>
+                <div class="col-12 mb-5 ">
+                    <div class="btn btn-warning">Output Results</div>
+                </div>
+                <div class="col-12">
+                    <p id="results1">
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $('.btn').on('click', function () {
+            var html = "<p>";
+            var mafianumber = $('#mafia').val();
+            var policenumber = $('#police').val();
+            var docNumber = $('#doctor').val();
+
+            if (docNumber == '') {
+                docNumber = 0;
+            }
+            var names = $('#names').val().split(' ');
+
+            console.log(names);
+            var html1 = "";
+            var html2 = "";
+            var total = parseInt(mafianumber) + parseInt(policenumber) + parseInt(docNumber);
+            var members = new Array(total);
+            var mainIndex = 0;
+            if (names.length <= 1 && total > 1) {
+                for (var i = 0; i < total; i++) {
+                    names[i] = '';
+                }
+            }
+
+            for (var i = 0; i < mafianumber; i++) {
+                if (i == 0) {
+                    members[mainIndex] = 'Don';
+                } else {
+                    members[mainIndex] = 'Mafia';
+                }
+                mainIndex++;
+            }
+
+            for (var i = 0; i < policenumber; i++) {
+                if (i == 0) {
+                    members[mainIndex] = 'Chief';
+                } else {
+                    members[mainIndex] = 'Police';
+                }
+                mainIndex++;
+            }
+
+            for (var i = 0; i < docNumber; i++) {
+                members[mainIndex] = 'Doctor';
+                mainIndex++;
+            }
+
+            var numbers = new Array(total);
+            console.log(numbers.length);
+            for (var i = 0; i < numbers.length; i++) {
+                var x = Math.floor(Math.random() * total);
+                while (numbers.includes(x)) {
+                    x = Math.floor(Math.random() * total);
+                }
+                numbers[i] = x;
+            }
+            console.log(numbers);
+            var index = 1;
+            for (var i = 0; i < numbers.length; i++) {
+                html1 += "<div class='dummy-p mb-5 mt-2' data-item=''" + index + "''> " + index +
+                    " - &nbsp; &nbsp; " +
+                    names[i] +
+                    " : &nbsp; &nbsp;<span data-content='" + index + "''> " +
+                    members[numbers[
+                        i]] +
+                    "</span>" +
+                    "<div class='btn-sm btn-success d-inline-block btn-hider' onclick='myFunction(" + index +
+                    ")'>Show </div>" +
+                    "<br></div> <hr>";
+
+                index++;
+            }
+            $('#results1').html(html1);
+        });
+
+        function myFunction(e) {
+            $('[data-content]').each(function (index) {
+                if ($(this).attr('data-content') == e) {
+                    $(this).toggleClass('show');
+
+
+                }
+            });
+        }
+        $('.btn-hider').on('click', function () {
+            $(this).parent('.dummy-p').toggleClass('show');
+        })
+    </script>
+
+</body>
+
+</html>
